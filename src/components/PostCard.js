@@ -13,7 +13,7 @@ class PostCard extends React.Component {
         this.handleDeleteComment = this.handleDeleteComment.bind(this);
         this.addComment = this.addComment.bind(this);
     }
-    componentWillMount() {
+    componentDidMount() {
         fetch("https://jsonplaceholder.typicode.com/comments")
             .then((response) => {
                 if (response.ok) {
@@ -31,8 +31,6 @@ class PostCard extends React.Component {
         this.setState({
             comments: this.state.comments.filter((comment) => comment.id !== id)
         });
-        console.log(id)
-        console.log(this.state.comments.length)
     }
     addComment(comment) {
         this.setState({
@@ -40,10 +38,9 @@ class PostCard extends React.Component {
         })
     }
     render() {
-        const { headerStyle, container } = styles;
         return (
-            <ScrollView contentContainerStyle={container}>
-                <Text style={headerStyle}>{this.props.post.title}</Text>
+            <ScrollView>
+                <Text>{this.props.post.title}</Text>
                 <Text>{this.props.post.body}</Text>
                 {
                     this.state.comments.map((comment, index) => <Comment
