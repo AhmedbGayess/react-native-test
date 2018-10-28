@@ -24,3 +24,13 @@ export const fetchComments = () => {
         }
     }
 };
+
+export const deleteComment = (id) => ({
+    type: "DELETE_COMMENT",
+    id
+});
+
+export const deleteComments = (id) => ({
+    type: "DELETE_COMMENTS",
+    id
+});

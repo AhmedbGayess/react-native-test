@@ -1,20 +1,31 @@
 import React from "react";
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { Actions } from "react-native-router-flux";
 
 class PostItem extends React.Component {
-    state = {
-        user: {}
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {}
+        }
+        this.openPostCard = this.openPostCard.bind(this)
     }
-    componentWillMount() {
+    
+    componentDidMount() {
         const user = this.props.users.find((user) => user.id === this.props.post.userId)
         this.setState({ user });
     }
-    render() {   
+
+    openPostCard() {
+        Actions.post({ user: this.state.user, post: this.props.post });
+    }
+
+    render() {
         return (
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={styles.container}
-                onPress={() => {console.log(this.props.post.body)}}
+                onPress={this.openPostCard}
             >
                 <Text>{this.state.user.name}</Text>
                 <Text>{this.props.post.title}</Text>

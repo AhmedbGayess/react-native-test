@@ -24,3 +24,8 @@ export const fetchPosts = () => {
         }
     }
 };
+
+export const deletePost = (id) => ({
+    type: "DELETE_POST",
+    id
+});

@@ -1,70 +1,61 @@
 import React from "react";
-import { ScrollView, Text, Button, View, StyleSheet } from "react-native";
-import Comment from "./Comment";
+import { ScrollView, Text, Button, FlatList } from "react-native";
+import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import Form from "./Form";
+import Comment from "./Comment";
+import { deletePost } from "../actions/posts";
+import { deleteComments } from "../actions/comments";
 
 class PostCard extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            comments: []
-        }
-        this.handleDeleteComment = this.handleDeleteComment.bind(this);
-        this.addComment = this.addComment.bind(this);
+            postComments: []
+        };
+        this.deletePostAndComments = this.deletePostAndComments.bind(this);
+        this.renderComments = this.renderComments.bind(this)
     }
+
+    renderComments() {
+        const postComments = this.props.comments.filter((comment) => comment.postId === this.props.post.id);
+        this.setState({ postComments });
+    }
+
     componentDidMount() {
-        fetch("https://jsonplaceholder.typicode.com/comments")
-            .then((response) => {
-                if (response.ok) {
-                    response.json().then((data) => {
-                        const comments = data.filter((comment) => comment.postId === this.props.post.id)
-                        this.setState({ comments });
-                    });
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this.renderComments()
     }
-    handleDeleteComment(id) {
-        this.setState({
-            comments: this.state.comments.filter((comment) => comment.id !== id)
-        });
+
+    deletePostAndComments(id) {
+        this.props.deletePost(id);
+        this.props.deleteComments(id);
+        Actions.pop();
     }
-    addComment(comment) {
-        this.setState({
-            comments: [...this.state.comments, comment]
-        })
-    }
+    
     render() {
         return (
             <ScrollView>
                 <Text>{this.props.post.title}</Text>
                 <Text>{this.props.post.body}</Text>
-                {
-                    this.state.comments.map((comment, index) => <Comment
-                        comment={comment}
-                        key={index}
-                        handleDeleteComment={this.handleDeleteComment}
-                    />)
-                }
-                <Button
-                    title="Delete Post"
-                    onPress={() => {
-                        this.props.handleDeletePost(this.props.post.id);
-                        console.log(this.props.post.id)
-                        Actions.Home();
-                    }}
+                <FlatList
+                    data={this.state.postComments}
+                    renderItem={({ item }) => <Comment comment={item} renderComments={this.renderComments}/>}
+                    keyExtractor={(comment) => comment.id.toString()}
                 />
-                <View>
-                    <Text>Add a comment</Text>
-                    <Form inputTitle="Comment" handlePost={this.addComment} />
-                </View>
-
+                <Button title="DeletePost" onPress={() => {
+                    this.deletePostAndComments(this.props.post.id)
+                }}/>
             </ScrollView>
-        );
+        )
     }
 }
 
-export default PostCard
+const mapStateToProps = (state) => ({
+    comments: state.commentsObject.comments
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    deletePost: (id) => dispatch(deletePost(id)),
+    deleteComments: (id) => dispatch(deleteComments(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostCard);

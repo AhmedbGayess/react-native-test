@@ -23,7 +23,18 @@ export default (state = defaultState, action) => {
                 isFetching: false,
                 comments: action.comments
             };
+        case "DELETE_COMMENT":
+            return {
+                ...state,
+                comments: state.comments.filter((comment) => comment.id !== action.id)
+            };
+        case "DELETE_COMMENTS":
+            return {
+                ...state,
+                comments: state.comments.filter((comment) => comment.postId !== action.id)
+            };
         default:
             return state;
     }
 }
+
