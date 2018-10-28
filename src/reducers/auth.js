@@ -1,6 +1,4 @@
-const defaultState = {}
-
-export default (state = defaultState, action) => {
+export default (state = {}, action) => {
     switch (action.type) {
         case "LOGIN":
             return action.user

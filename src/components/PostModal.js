@@ -1,9 +1,9 @@
 import React from "react";
 import Modal from "react-native-modal";
 import { Text, View, TouchableOpacity, Button } from "react-native";
-import UserForm from "./UserForm";
+import PostForm from "./PostForm";
 
-const UserModal = (props) => (
+const PostModal = (props) => (
     <Modal
         isVisible={props.isVisible}
         backdropColor="#fff"
@@ -14,13 +14,12 @@ const UserModal = (props) => (
                 <Text>X</Text>
             </TouchableOpacity>
             <Text>{props.title}</Text>
-            <UserForm
-                title={props.title}
-                method={props.method}
+            <PostForm
                 toggleModal={props.toggleModal}
+                renderPosts={props.renderPosts}
             />
         </View>
     </Modal>
 );
 
-export default UserModal;
+export default PostModal;

@@ -23,6 +23,14 @@ export default (state = defaultState, action) => {
                 isFetching: false,
                 comments: action.comments
             };
+        case "ADD_COMMENT":
+            return {
+                ...state,
+                comments: [
+                    ...state.comments,
+                    action.comment
+                ]
+            };
         case "DELETE_COMMENT":
             return {
                 ...state,

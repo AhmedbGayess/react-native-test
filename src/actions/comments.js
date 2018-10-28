@@ -25,6 +25,11 @@ export const fetchComments = () => {
     }
 };
 
+export const addComment = (comment) => ({
+    type: "ADD_COMMENT",
+    comment
+});
+
 export const deleteComment = (id) => ({
     type: "DELETE_COMMENT",
     id

@@ -25,7 +25,7 @@ export const fetchUsers = () => {
     }
 };
 
-export const addUser = (user) => {
+export const addUser = (user) => ({
     type: "ADD_USER",
     user
-}
+})

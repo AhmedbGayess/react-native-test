@@ -25,6 +25,11 @@ export const fetchPosts = () => {
     }
 };
 
+export const addPost = (post) => ({
+    type: "ADD_POST",
+    post
+});
+
 export const deletePost = (id) => ({
     type: "DELETE_POST",
     id

@@ -18,6 +18,7 @@ class Comment extends React.Component {
         const { viewStyle } = styles;
         return (
             <View style={viewStyle}>
+                <Text>{this.props.comment.name}</Text>
                 <Text>{this.props.comment.body}</Text>
                 <Button
                     title="Delete Comment"

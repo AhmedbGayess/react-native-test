@@ -1,10 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Text, View, TouchableOpacity, Button } from "react-native";
+import { Text, View, Button } from "react-native";
 
 import { fetchPosts } from "../actions/posts";
 import { fetchUsers, addUser } from "../actions/users";
 import { fetchComments } from "../actions/comments";
+import { login, logout } from "../actions/auth";
+
 import PostList from "./PostList"
 import UserModal from "../components/UserModal";
 
@@ -15,8 +17,9 @@ class AppContainer extends React.Component {
             isLoginModalVisible: false,
             isSigninModalVisible: false
         };
-        this.toggleLoginModal = this.toggleLoginModal.bind(this);
         this.toggleSigninModal = this.toggleSigninModal.bind(this);
+        this.handleSignin = this.handleSignin.bind(this);
+        this.signinAndOut = this.signinAndOut.bind(this);
     }
 
     componentDidMount() {
@@ -25,12 +28,21 @@ class AppContainer extends React.Component {
         this.props.fetchComments();
     }
 
-    toggleLoginModal() {
-        this.setState({ isLoginModalVisible: !this.state.isLoginModalVisible });
-    }
-
     toggleSigninModal() {
         this.setState({ isSigninModalVisible: !this.state.isSigninModalVisible });
+    }
+
+    handleSignin(user) {
+        this.props.addUser(user);
+        this.props.login(user);
+    }
+
+    signinAndOut() {
+        if (!this.props.loggedIn) {
+            this.toggleSigninModal();
+        } else {
+            this.props.logout();
+        }
     }
 
     render() {
@@ -43,17 +55,17 @@ class AppContainer extends React.Component {
         } else {
             return (
                 <View>
-                    <TouchableOpacity onPress={this.toggleLoginModal}>
-                        <Text>Login</Text>
-                    </TouchableOpacity>
+                    <Button 
+                        title={this.props.loggedIn ? "Sign Out" : "Sign In"}
+                        onPress={this.signinAndOut}
+                    />
 
-                    <UserModal toggleModal={this.toggleLoginModal} isVisible={this.state.isLoginModalVisible} title="Login"/>
-
-                    <TouchableOpacity onPress={this.toggleSigninModal}>
-                        <Text>Sign in</Text>
-                    </TouchableOpacity>
-
-                    <UserModal toggleModal={this.toggleSigninModal} isVisible={this.state.isSigninModalVisible} title="Sign in"/>
+                    <UserModal
+                        toggleModal={this.toggleSigninModal}
+                        isVisible={this.state.isSigninModalVisible}
+                        title="Sign in"
+                        method={this.handleSignin}
+                    />
 
                     <PostList />
                 </View>
@@ -67,14 +79,16 @@ const mapStateToProps = (state) => ({
     posts: state.postsObject,
     users: state.usersObject,
     comments: state.commentsObject,
-    auth: state.auth
+    loggedIn: state.auth.id
 });
 
 const mapDispatchToProps = (dispatch) => ({
     fetchPosts: () => dispatch(fetchPosts()),
     fetchUsers: () => dispatch(fetchUsers()),
     fetchComments: () => dispatch(fetchComments()),
-    addUser: (user) => dispatch(addUser(user))
+    addUser: (user) => dispatch(addUser(user)),
+    login: (user) => dispatch(login(user)),
+    logout: () => dispatch(logout())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
