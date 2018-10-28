@@ -54,7 +54,7 @@ class AppContainer extends React.Component {
             )
         } else {
             return (
-                <View>
+                <View style={{height: 150}} >
                     <Button 
                         title={this.props.loggedIn ? "Sign Out" : "Sign In"}
                         onPress={this.signinAndOut}

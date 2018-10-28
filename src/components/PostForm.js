@@ -23,7 +23,6 @@ class Form extends React.Component {
                 id: this.props.posts[this.props.posts.length -1].id + 1
             });
             this.props.toggleModal();
-            this.props.renderPosts();
         }
     }
 

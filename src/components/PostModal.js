@@ -16,7 +16,6 @@ const PostModal = (props) => (
             <Text>{props.title}</Text>
             <PostForm
                 toggleModal={props.toggleModal}
-                renderPosts={props.renderPosts}
             />
         </View>
     </Modal>

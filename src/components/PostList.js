@@ -12,19 +12,8 @@ class PostList extends React.Component {
             isAddPostModalVisible: false
         }
         this.toggleAddPostModal = this.toggleAddPostModal.bind(this);
-        this.renderPosts = this.renderPosts.bind(this);
-    }
-    renderPosts() {
-        this.setState({ posts: this.props.posts });
-        console.log(this.state.posts);
-        console.log(this.props.posts);
-    }
-    componentDidMount() {
-        this.renderPosts()
-    }
-    toggleAddPostModal() {
+    }toggleAddPostModal() {
         this.setState({ isAddPostModalVisible: !this.state.isAddPostModalVisible });
-        console.log(this.props.posts)
     }
     render() {
         return (
@@ -34,7 +23,6 @@ class PostList extends React.Component {
                 <PostModal
                     toggleModal={this.toggleAddPostModal}
                     isVisible={this.state.isAddPostModalVisible}
-                    renderPosts={this.renderPosts}
                 />
 
                 <FlatList

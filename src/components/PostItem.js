@@ -37,7 +37,7 @@ class PostItem extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 26,
+        padding: 1,
         backgroundColor: "#f6e5a2",
         alignItems: "center",
         justifyContent: "flex-start",
