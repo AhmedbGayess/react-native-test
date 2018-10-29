@@ -29,18 +29,18 @@ class UserForm extends React.Component {
 
                 <Text>Name</Text>
                 <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
                     onChangeText={(name) => this.setState({ name })}
                 />
 
                 <Text>Email</Text>
                 <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
                     onChangeText={(email) => this.setState({ email })}
                 />
                 <Text>Password</Text>
                 <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
                     onChangeText={(password) => this.setState({ password })}
                 />
                 <Button

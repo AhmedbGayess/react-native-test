@@ -10,14 +10,14 @@ class Comment extends React.Component {
     }
 
     handleDeleteComment(id) {
-        this.props.deleteComment(id) 
-        this.props.renderComments()
+        this.props.deleteComment(id);
+        this.props.renderComments();
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.name}>{this.props.comment.name}</Text>
+                <Text style={styles.name} numberOfLines={1}>{this.props.comment.name}</Text>
                 <Text style={styles.comment}>{this.props.comment.body}</Text>
                 <Button
                     color="#FD5700"
@@ -34,14 +34,14 @@ const styles = StyleSheet.create({
       width: "100%",
       marginBottom: 5,
       padding: 10,
-      backgroundColor: "#fff",
-      alignItems: "center"
+      backgroundColor: "#fff"
     },
     name: {
-        fontWeight: "600"
+        fontWeight: "600",
+        textAlign: "center"
     },
     comment: {
-        margin: 10
+        margin: 10,
     }
   });
 

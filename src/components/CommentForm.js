@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { addComment } from "../actions/comments";
 
@@ -18,14 +18,15 @@ class CommentForm extends React.Component {
             postId: this.props.postId,
             id: this.props.comments[this.props.comments.length - 1] + 1,
             body: this.state.comment
-        })
+        });
+        this.props.renderComments();
     }
     render() {
         return (
-            <View>
-                <Text>Add a comment</Text>
+            <View style={styles.form}>
+                <Text style={styles.label}>Add a comment</Text>
                 <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    style={styles.input}
                     value={this.state.name}
                     onChangeText={(comment) => this.setState({ comment })}
                 />
@@ -38,6 +39,26 @@ class CommentForm extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    form: {
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#eee",
+        marginBottom: 10,
+        padding: 10
+    },
+    input: {
+        width: "95%",
+        height: 40,
+        borderColor: "gray",
+        borderWidth: 1,
+        margin: 10
+    },
+    label: {
+        fontWeight: "800"
+    }
+})
 
 const mapStateToProps = (state) => ({
     loggedIn: state.auth.id,

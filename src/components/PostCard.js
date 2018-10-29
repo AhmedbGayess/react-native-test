@@ -41,7 +41,12 @@ class PostCard extends React.Component {
                     <Text style={styles.body}>{this.props.post.body}</Text>
                 </View>
 
-                {this.props.loggedIn ? <CommentForm postId={this.props.post.id} /> : <Text>Sign in to add a comment</Text>}
+                {this.props.loggedIn ? <CommentForm postId={this.props.post.id} renderComments={this.renderComments}/> : (
+                    <View style={styles.loginMessage}>
+                        <Text>Sign in to add a comment</Text>
+                    </View>
+                )
+                }
 
                 <FlatList
                     data={this.state.postComments}
@@ -63,15 +68,21 @@ const styles = StyleSheet.create({
     post: {
         marginBottom: 10,
         padding: 5,
-        alignItems: "center"
+        alignItems: "center",
+        borderBottomColor: "gray",
+        borderBottomWidth: 1
     },
     title: {
         textAlign: "center",
         marginBottom: 5,
         fontWeight: "800"
-    }, 
+    },
     body: {
         textAlign: "justify"
+    },
+    loginMessage: {
+        alignItems: "center",
+        marginBottom: 20
     }
 });
 
