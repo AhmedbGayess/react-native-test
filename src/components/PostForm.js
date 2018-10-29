@@ -28,7 +28,7 @@ class PostForm extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <Text style={styles.header}>Add Post</Text>
                 <Text>Title</Text>
                 <TextInput
@@ -52,6 +52,12 @@ class PostForm extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 10,
+        backgroundColor: "#eee",
+        borderColor: "#000",
+        borderWidth: 1
+    },
     header: {
         textAlign: "center",
         fontSize: 20,
@@ -62,7 +68,8 @@ const styles = StyleSheet.create({
         margin: 10,
         height: 40,
         borderColor: "gray",
-        borderWidth: 1
+        borderWidth: 1,
+        backgroundColor: "#fff"
     }
 });
 

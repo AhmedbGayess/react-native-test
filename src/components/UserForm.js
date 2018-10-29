@@ -32,7 +32,7 @@ class UserForm extends React.Component {
 
         render() {
             return (
-                <View>
+                <View style={styles.container}>
 
                     <Text style={styles.header}>Sign In</Text>
 
@@ -59,6 +59,12 @@ class UserForm extends React.Component {
     }
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 10,
+        backgroundColor: "#eee",
+        borderColor: "#000",
+        borderWidth: 1
+    },
     header: {
         textAlign: "center",
         fontSize: 20,

@@ -6,7 +6,7 @@ const UserModal = (props) => (
     <Modal
         isVisible={props.isVisible}
         backdropColor="#fff"
-        backdropOpacity={1}
+        backdropOpacity={0.8}
         avoidKeyboard={true}
     >
         <View>
