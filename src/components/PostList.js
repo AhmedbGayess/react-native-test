@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, Button } from "react-native";
+import { View, FlatList, Button, Text } from "react-native";
 import { connect } from "react-redux";
 import PostItem from "./PostItem";
 import Modal from "../components/Modal";
@@ -22,7 +22,23 @@ class PostList extends React.Component {
     render() {
         return (
             <View>
-                {this.props.loggedIn && <Button title="Add Post" onPress={this.toggleAddPostModal} />}
+                {
+                    this.props.loggedIn ? (
+                        <Button
+                            title="Add Post"
+                            onPress={this.toggleAddPostModal}
+                            color="#00FF09"
+                        />
+                    ) : (
+                            <Text style={{
+                                textAlign: "center",
+                                 margin: 20
+                            }}>
+                                Login to add a post
+                            </Text>
+                        )
+
+                }
 
                 <Modal
                     form={PostForm}

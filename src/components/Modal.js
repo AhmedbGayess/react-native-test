@@ -11,7 +11,7 @@ const UserModal = (props) => (
     >
         <View>
             <TouchableOpacity onPress={props.toggleModal}>
-                <Text>X</Text>
+                <Text style={{ textAlign: "right" }}>X</Text>
             </TouchableOpacity>
             <Text>{props.title}</Text>
             <props.form

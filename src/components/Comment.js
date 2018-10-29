@@ -10,7 +10,6 @@ const Comment = (props) => (
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
         marginBottom: 5,
         padding: 10,
         backgroundColor: "#fff"
