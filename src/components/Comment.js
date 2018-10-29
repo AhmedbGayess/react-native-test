@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { deleteComment } from "../actions/comments";
 
@@ -15,12 +15,12 @@ class Comment extends React.Component {
     }
 
     render() {
-        const { viewStyle } = styles;
         return (
-            <View style={viewStyle}>
-                <Text>{this.props.comment.name}</Text>
-                <Text>{this.props.comment.body}</Text>
+            <View style={styles.container}>
+                <Text style={styles.name}>{this.props.comment.name}</Text>
+                <Text style={styles.comment}>{this.props.comment.body}</Text>
                 <Button
+                    color="#FD5700"
                     title="Delete Comment"
                     onPress={() => this.handleDeleteComment(this.props.comment.id)}
                 />
@@ -29,15 +29,21 @@ class Comment extends React.Component {
     }
 }
 
-const styles = {
-    viewStyle: {
-        borderWidth: 1,
-        borderRadius: 2,
-        borderColor: "#000",
-        margin: 3,
-        padding: 3
+const styles = StyleSheet.create({
+    container: {
+      width: "100%",
+      marginBottom: 5,
+      padding: 10,
+      backgroundColor: "#fff",
+      alignItems: "center"
+    },
+    name: {
+        fontWeight: "600"
+    },
+    comment: {
+        margin: 10
     }
-}
+  });
 
 const mapDispatchToProps = (dispatch) => ({
     deleteComment: (id) => dispatch(deleteComment(id))

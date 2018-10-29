@@ -12,9 +12,12 @@ class PostList extends React.Component {
             isAddPostModalVisible: false
         }
         this.toggleAddPostModal = this.toggleAddPostModal.bind(this);
-    }toggleAddPostModal() {
+    } 
+    
+    toggleAddPostModal() {
         this.setState({ isAddPostModalVisible: !this.state.isAddPostModalVisible });
     }
+    
     render() {
         return (
             <View>

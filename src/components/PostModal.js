@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-native-modal";
-import { Text, View, TouchableOpacity, Button } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import PostForm from "./PostForm";
 
 const PostModal = (props) => (
@@ -9,7 +9,7 @@ const PostModal = (props) => (
         backdropColor="#fff"
         backdropOpacity={1}
     >
-        <View style={{ flex: 1 }}>
+        <View>
             <TouchableOpacity onPress={props.toggleModal}>
                 <Text>X</Text>
             </TouchableOpacity>

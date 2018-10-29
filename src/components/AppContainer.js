@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Text, View, Button } from "react-native";
+import { Button, ScrollView, StyleSheet } from "react-native";
 
 import { fetchPosts } from "../actions/posts";
 import { fetchUsers, addUser } from "../actions/users";
@@ -9,6 +9,7 @@ import { login, logout } from "../actions/auth";
 
 import PostList from "./PostList"
 import UserModal from "../components/UserModal";
+import LoadingPage from "./LoadingPage";
 
 class AppContainer extends React.Component {
     constructor(props) {
@@ -47,28 +48,22 @@ class AppContainer extends React.Component {
 
     render() {
         if (this.props.posts.isFetching || this.props.users.isFetching || this.props.comments.isFetching) {
-            return (
-                <View>
-                    <Text>Loading</Text>
-                </View>
-            )
+            return <LoadingPage />
         } else {
             return (
-                <View style={{height: 150}} >
-                    <Button 
+                <ScrollView>
+                    <Button
                         title={this.props.loggedIn ? "Sign Out" : "Sign In"}
                         onPress={this.signinAndOut}
                     />
-
                     <UserModal
                         toggleModal={this.toggleSigninModal}
                         isVisible={this.state.isSigninModalVisible}
-                        title="Sign in"
                         method={this.handleSignin}
                     />
 
                     <PostList />
-                </View>
+                </ScrollView>
 
             );
         }

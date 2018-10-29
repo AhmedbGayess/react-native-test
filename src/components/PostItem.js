@@ -15,6 +15,7 @@ class PostItem extends React.Component {
     componentDidMount() {
         const user = this.props.users.find((user) => user.id === this.props.post.userId)
         this.setState({ user });
+        console.log(this.props.users)
     }
 
     openPostCard() {
@@ -24,7 +25,7 @@ class PostItem extends React.Component {
     render() {
         return (
             <TouchableOpacity
-                style={styles.container}
+                style={styles.postItem}
                 onPress={this.openPostCard}
             >
                 <Text>{this.state.user.name}</Text>
@@ -35,13 +36,12 @@ class PostItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 1,
-        backgroundColor: "#f6e5a2",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        margin: 2
+    postItem: {
+        width: "100%",
+        marginBottom: 5,
+        padding: 10,
+        backgroundColor: "#fff",
+        alignItems: "center"
     }
 });
 

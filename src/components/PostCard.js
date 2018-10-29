@@ -1,10 +1,12 @@
 import React from "react";
-import { ScrollView, Text, Button, FlatList } from "react-native";
+import { ScrollView, View, Text, Button, FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import Comment from "./Comment";
 import { deletePost } from "../actions/posts";
 import { deleteComments } from "../actions/comments";
+import CommentForm from "./CommentForm";
+
 
 class PostCard extends React.Component {
     constructor(props) {
@@ -13,7 +15,7 @@ class PostCard extends React.Component {
             postComments: []
         };
         this.deletePostAndComments = this.deletePostAndComments.bind(this);
-        this.renderComments = this.renderComments.bind(this)
+        this.renderComments = this.renderComments.bind(this);
     }
 
     renderComments() {
@@ -22,7 +24,7 @@ class PostCard extends React.Component {
     }
 
     componentDidMount() {
-        this.renderComments()
+        this.renderComments();
     }
 
     deletePostAndComments(id) {
@@ -30,27 +32,52 @@ class PostCard extends React.Component {
         this.props.deleteComments(id);
         Actions.pop();
     }
-    
+
     render() {
         return (
             <ScrollView>
-                <Text>{this.props.post.title}</Text>
-                <Text>{this.props.post.body}</Text>
+                <View style={styles.post}>
+                    <Text style={styles.title}>{this.props.post.title}</Text>
+                    <Text style={styles.body}>{this.props.post.body}</Text>
+                </View>
+
+                {this.props.loggedIn ? <CommentForm postId={this.props.post.id} /> : <Text>Sign in to add a comment</Text>}
+
                 <FlatList
                     data={this.state.postComments}
-                    renderItem={({ item }) => <Comment comment={item} renderComments={this.renderComments}/>}
+                    renderItem={({ item }) => <Comment comment={item} renderComments={this.renderComments} />}
                     keyExtractor={(comment) => comment.id.toString()}
                 />
-                <Button title="DeletePost" onPress={() => {
-                    this.deletePostAndComments(this.props.post.id)
-                }}/>
+                <Button title="Delete Post"
+                    onPress={() => {
+                        this.deletePostAndComments(this.props.post.id);
+                    }}
+                    color="red"
+                />
             </ScrollView>
-        )
+        );
     }
 }
 
+const styles = StyleSheet.create({
+    post: {
+        marginBottom: 10,
+        padding: 5,
+        alignItems: "center"
+    },
+    title: {
+        textAlign: "center",
+        marginBottom: 5,
+        fontWeight: "800"
+    }, 
+    body: {
+        textAlign: "justify"
+    }
+});
+
 const mapStateToProps = (state) => ({
-    comments: state.commentsObject.comments
+    comments: state.commentsObject.comments,
+    loggedIn: state.auth.id
 });
 
 const mapDispatchToProps = (dispatch) => ({
