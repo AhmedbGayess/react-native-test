@@ -37,7 +37,6 @@ class PostList extends React.Component {
                                 Login to add a post
                             </Text>
                         )
-
                 }
 
                 <Modal

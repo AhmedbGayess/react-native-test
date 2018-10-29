@@ -60,7 +60,6 @@ class AppContainer extends React.Component {
 
                     <PostList />
                 </ScrollView>
-
             );
         }
     }

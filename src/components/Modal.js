@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-native-modal";
-import { Text, View, TouchableOpacity, Button } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 
 const UserModal = (props) => (
     <Modal
