@@ -68,9 +68,7 @@ const styles = StyleSheet.create({
     post: {
         marginBottom: 10,
         padding: 5,
-        alignItems: "center",
-        borderBottomColor: "gray",
-        borderBottomWidth: 1
+        alignItems: "center"
     },
     title: {
         textAlign: "center",
