@@ -15,7 +15,6 @@ class PostItem extends React.Component {
     componentDidMount() {
         const user = this.props.users.find((user) => user.id === this.props.post.userId)
         this.setState({ user });
-        console.log(this.props.users)
     }
 
     openPostCard() {

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TextInput, Text, Button } from "react-native";
+import { View, TextInput, Text, Button, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { addPost } from "../actions/posts";
@@ -29,16 +29,16 @@ class PostForm extends React.Component {
     render() {
         return (
             <View>
-                <Text>Add Post</Text>
+                <Text style={styles.header}>Add Post</Text>
                 <Text>Title</Text>
                 <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    style={styles.input}
                     value={this.state.name}
                     onChangeText={(title) => this.setState({ title })}
                 />
                 <Text>Body</Text>
                 <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    style={styles.input}
                     value={this.state.body}
                     onChangeText={(body) => this.setState({ body })}
                 />
@@ -50,6 +50,21 @@ class PostForm extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    header: {
+        textAlign: "center",
+        fontSize: 20,
+        fontWeight: "800",
+        margin: 10
+    },
+    input: {
+        margin: 10,
+        height: 40,
+        borderColor: "gray",
+        borderWidth: 1
+    }
+});
 
 const mapStateToProps = (state) => ({
     loggedIn: state.auth.id,

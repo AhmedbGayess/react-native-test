@@ -1,22 +1,20 @@
 import React from "react";
 import Modal from "react-native-modal";
 import { Text, View, TouchableOpacity, Button } from "react-native";
-import UserForm from "./UserForm";
 
 const UserModal = (props) => (
     <Modal
         isVisible={props.isVisible}
         backdropColor="#fff"
         backdropOpacity={1}
+        avoidKeyboard={true}
     >
-        <View style={{ flex: 1 }}>
+        <View>
             <TouchableOpacity onPress={props.toggleModal}>
                 <Text>X</Text>
             </TouchableOpacity>
             <Text>{props.title}</Text>
-            <UserForm
-                title={props.title}
-                method={props.method}
+            <props.form
                 toggleModal={props.toggleModal}
             />
         </View>

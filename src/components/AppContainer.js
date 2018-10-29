@@ -1,25 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, ScrollView, StyleSheet } from "react-native";
+import { Button, ScrollView } from "react-native";
 
 import { fetchPosts } from "../actions/posts";
 import { fetchUsers, addUser } from "../actions/users";
 import { fetchComments } from "../actions/comments";
-import { login, logout } from "../actions/auth";
+import { logout } from "../actions/auth";
 
 import PostList from "./PostList"
-import UserModal from "../components/UserModal";
+import Modal from "./Modal";
 import LoadingPage from "./LoadingPage";
+import UserForm from "./UserForm";
+
 
 class AppContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoginModalVisible: false,
             isSigninModalVisible: false
         };
         this.toggleSigninModal = this.toggleSigninModal.bind(this);
-        this.handleSignin = this.handleSignin.bind(this);
         this.signinAndOut = this.signinAndOut.bind(this);
     }
 
@@ -32,12 +32,7 @@ class AppContainer extends React.Component {
     toggleSigninModal() {
         this.setState({ isSigninModalVisible: !this.state.isSigninModalVisible });
     }
-
-    handleSignin(user) {
-        this.props.addUser(user);
-        this.props.login(user);
-    }
-
+    
     signinAndOut() {
         if (!this.props.loggedIn) {
             this.toggleSigninModal();
@@ -56,7 +51,8 @@ class AppContainer extends React.Component {
                         title={this.props.loggedIn ? "Sign Out" : "Sign In"}
                         onPress={this.signinAndOut}
                     />
-                    <UserModal
+                    <Modal
+                        form={UserForm}
                         toggleModal={this.toggleSigninModal}
                         isVisible={this.state.isSigninModalVisible}
                         method={this.handleSignin}
@@ -81,8 +77,6 @@ const mapDispatchToProps = (dispatch) => ({
     fetchPosts: () => dispatch(fetchPosts()),
     fetchUsers: () => dispatch(fetchUsers()),
     fetchComments: () => dispatch(fetchComments()),
-    addUser: (user) => dispatch(addUser(user)),
-    login: (user) => dispatch(login(user)),
     logout: () => dispatch(logout())
 });
 

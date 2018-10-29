@@ -21,6 +21,7 @@ class CommentForm extends React.Component {
         });
         this.props.renderComments();
     }
+
     render() {
         return (
             <View style={styles.form}>

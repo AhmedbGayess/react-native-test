@@ -2,7 +2,8 @@ import React from "react";
 import { View, FlatList, Button } from "react-native";
 import { connect } from "react-redux";
 import PostItem from "./PostItem";
-import PostModal from "../components/PostModal";
+import Modal from "../components/Modal";
+import PostForm from "./PostForm";
 
 class PostList extends React.Component {
     constructor(props) {
@@ -12,18 +13,19 @@ class PostList extends React.Component {
             isAddPostModalVisible: false
         }
         this.toggleAddPostModal = this.toggleAddPostModal.bind(this);
-    } 
-    
+    }
+
     toggleAddPostModal() {
         this.setState({ isAddPostModalVisible: !this.state.isAddPostModalVisible });
     }
-    
+
     render() {
         return (
             <View>
                 {this.props.loggedIn && <Button title="Add Post" onPress={this.toggleAddPostModal} />}
 
-                <PostModal
+                <Modal
+                    form={PostForm}
                     toggleModal={this.toggleAddPostModal}
                     isVisible={this.state.isAddPostModalVisible}
                 />
