@@ -19,7 +19,6 @@ class CommentForm extends React.Component {
             id: this.props.comments[this.props.comments.length - 1] + 1,
             body: this.state.comment
         });
-        this.props.renderComments();
     }
 
     render() {

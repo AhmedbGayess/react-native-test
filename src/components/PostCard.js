@@ -27,9 +27,9 @@ class PostCard extends React.Component {
         this.renderComments();
     }
 
-    deletePostAndComments(id) {
-        this.props.deletePost(id);
-        this.props.deleteComments(id);
+    deletePostAndComments() {
+        this.props.deletePost(this.props.post.id);
+        this.props.deleteComments(this.props.post.id);
         Actions.pop();
     }
 
@@ -41,7 +41,7 @@ class PostCard extends React.Component {
                     <Text style={styles.body}>{this.props.post.body}</Text>
                 </View>
 
-                {this.props.loggedIn ? <CommentForm postId={this.props.post.id} renderComments={this.renderComments}/> : (
+                {this.props.loggedIn ? <CommentForm postId={this.props.post.id} renderComments={this.renderComments} /> : (
                     <View style={styles.loginMessage}>
                         <Text>Sign in to add a comment</Text>
                     </View>
@@ -53,10 +53,9 @@ class PostCard extends React.Component {
                     renderItem={({ item }) => <Comment comment={item} renderComments={this.renderComments} />}
                     keyExtractor={(comment) => comment.id.toString()}
                 />
-                <Button title="Delete Post"
-                    onPress={() => {
-                        this.deletePostAndComments(this.props.post.id);
-                    }}
+                <Button
+                    title="Delete Post"
+                    onPress={this.deletePostAndComments}
                     color="red"
                 />
             </ScrollView>
