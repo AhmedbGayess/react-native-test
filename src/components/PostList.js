@@ -13,10 +13,21 @@ class PostList extends React.Component {
             isAddPostModalVisible: false
         }
         this.toggleAddPostModal = this.toggleAddPostModal.bind(this);
+        this.renderPosts = this.renderPosts.bind(this);
     }
 
     toggleAddPostModal() {
         this.setState({ isAddPostModalVisible: !this.state.isAddPostModalVisible });
+    }
+
+    renderPosts() {
+        return (
+            <FlatList
+                data={this.props.posts}
+                renderItem={({ item }) => <PostItem post={item} />}
+                keyExtractor={(post) => post.id.toString()}
+            />
+        );
     }
 
     render() {
@@ -32,7 +43,7 @@ class PostList extends React.Component {
                     ) : (
                             <Text style={{
                                 textAlign: "center",
-                                 margin: 20
+                                margin: 20
                             }}>
                                 Login to add a post
                             </Text>
@@ -45,11 +56,8 @@ class PostList extends React.Component {
                     isVisible={this.state.isAddPostModalVisible}
                 />
 
-                <FlatList
-                    data={this.props.posts}
-                    renderItem={({ item }) => <PostItem post={item} />}
-                    keyExtractor={(post) => post.id.toString()}
-                />
+                {this.renderPosts()}
+
             </View>
         );
     }
