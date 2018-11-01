@@ -48,6 +48,7 @@ class AppContainer extends React.Component {
                         title={this.props.loggedIn ? "Sign Out" : "Sign In"}
                         onPress={this.signinAndOut}
                     />
+                    
                     <Modal
                         form={UserForm}
                         toggleModal={this.toggleSigninModal}

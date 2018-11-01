@@ -6,7 +6,6 @@ import Comment from "./Comment";
 import { deletePost } from "../actions/posts";
 import CommentForm from "./CommentForm";
 
-
 class PostCard extends React.Component {
     constructor(props) {
         super(props);
@@ -15,6 +14,7 @@ class PostCard extends React.Component {
         };
         this.deletePostAndComments = this.deletePostAndComments.bind(this);
         this.addComment = this.addComment.bind(this);
+        this.renderComments = this.renderComments.bind(this);
     }
 
     async componentDidMount() {
@@ -34,6 +34,16 @@ class PostCard extends React.Component {
         }));
     }
 
+    renderComments() {
+        return (
+            <FlatList
+                data={this.state.postComments}
+                renderItem={({ item }) => <Comment comment={item} />}
+                keyExtractor={(comment) => comment.body}
+            />
+        )
+    }
+
     deletePostAndComments() {
         this.props.deletePost(this.props.post.id);
         Actions.pop();
@@ -47,18 +57,16 @@ class PostCard extends React.Component {
                     <Text style={styles.body}>{this.props.post.body}</Text>
                 </View>
 
-                {this.props.loggedIn ? <CommentForm postId={this.props.post.id} addComment={this.addComment} /> : (
-                    <View style={styles.loginMessage}>
-                        <Text>Sign in to add a comment</Text>
-                    </View>
-                )
+                {
+                    this.props.loggedIn ? <CommentForm postId={this.props.post.id} addComment={this.addComment} /> : (
+                        <View style={styles.loginMessage}>
+                            <Text>Sign in to add a comment</Text>
+                        </View>
+                    )
                 }
 
-                <FlatList
-                    data={this.state.postComments}
-                    renderItem={({ item }) => <Comment comment={item} />}
-                    keyExtractor={(comment) => comment.body}
-                />
+                { this.renderComments() }
+
                 <Button
                     title="Delete Post"
                     onPress={this.deletePostAndComments}

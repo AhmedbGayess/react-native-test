@@ -23,6 +23,7 @@ class CommentForm extends React.Component {
         return (
             <View style={styles.form}>
                 <Text style={styles.label}>Add a comment</Text>
+                
                 <TextInput
                     style={styles.input}
                     value={this.state.name}
