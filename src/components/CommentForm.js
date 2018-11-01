@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { addComment } from "../actions/comments";
 
 class CommentForm extends React.Component {
     constructor(props) {
@@ -16,7 +15,6 @@ class CommentForm extends React.Component {
         this.props.addComment({
             name: this.props.user.name,
             postId: this.props.postId,
-            id: this.props.comments[this.props.comments.length - 1] + 1,
             body: this.state.comment
         });
     }
@@ -62,12 +60,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     loggedIn: state.auth.id,
-    user: state.auth,
-    comments: state.commentsObject.comments
+    user: state.auth
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    addComment: (comment) => dispatch(addComment(comment))
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentForm);
+export default connect(mapStateToProps)(CommentForm);

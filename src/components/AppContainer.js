@@ -3,15 +3,13 @@ import { connect } from "react-redux";
 import { Button, ScrollView } from "react-native";
 
 import { fetchPosts } from "../actions/posts";
-import { fetchUsers, addUser } from "../actions/users";
-import { fetchComments } from "../actions/comments";
+import { fetchUsers } from "../actions/users";
 import { logout } from "../actions/auth";
 
 import PostList from "./PostList"
 import Modal from "./Modal";
 import LoadingPage from "./LoadingPage";
 import UserForm from "./UserForm";
-
 
 class AppContainer extends React.Component {
     constructor(props) {
@@ -26,7 +24,6 @@ class AppContainer extends React.Component {
     componentDidMount() {
         this.props.fetchPosts();
         this.props.fetchUsers();
-        this.props.fetchComments();
     }
 
     toggleSigninModal() {
@@ -42,7 +39,7 @@ class AppContainer extends React.Component {
     }
 
     render() {
-        if (this.props.posts.isFetching || this.props.users.isFetching || this.props.comments.isFetching) {
+        if (this.props.posts.isFetching || this.props.users.isFetching) {
             return <LoadingPage />
         } else {
             return (
@@ -68,14 +65,12 @@ class AppContainer extends React.Component {
 const mapStateToProps = (state) => ({
     posts: state.postsObject,
     users: state.usersObject,
-    comments: state.commentsObject,
     loggedIn: state.auth.id
 });
 
 const mapDispatchToProps = (dispatch) => ({
     fetchPosts: () => dispatch(fetchPosts()),
     fetchUsers: () => dispatch(fetchUsers()),
-    fetchComments: () => dispatch(fetchComments()),
     logout: () => dispatch(logout())
 });
 

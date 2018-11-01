@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import Comment from "./Comment";
 import { deletePost } from "../actions/posts";
-import { deleteComments } from "../actions/comments";
 import CommentForm from "./CommentForm";
 
 
@@ -15,21 +14,28 @@ class PostCard extends React.Component {
             postComments: []
         };
         this.deletePostAndComments = this.deletePostAndComments.bind(this);
-        this.renderComments = this.renderComments.bind(this);
+        this.addComment = this.addComment.bind(this);
     }
 
-    renderComments() {
-        const postComments = this.props.comments.filter((comment) => comment.postId === this.props.post.id);
-        this.setState({ postComments });
+    async componentDidMount() {
+        try {
+            const response = await fetch("https://jsonplaceholder.typicode.com/comments");
+            const comments = await response.json();
+            const postComments = comments.filter((comment) => comment.postId === this.props.post.id);
+            this.setState({ postComments });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    componentDidMount() {
-        this.renderComments();
+    addComment(comment) {
+        this.setState(() => ({
+            postComments: this.state.postComments.concat(comment)
+        }));
     }
 
     deletePostAndComments() {
         this.props.deletePost(this.props.post.id);
-        this.props.deleteComments(this.props.post.id);
         Actions.pop();
     }
 
@@ -41,7 +47,7 @@ class PostCard extends React.Component {
                     <Text style={styles.body}>{this.props.post.body}</Text>
                 </View>
 
-                {this.props.loggedIn ? <CommentForm postId={this.props.post.id} renderComments={this.renderComments} /> : (
+                {this.props.loggedIn ? <CommentForm postId={this.props.post.id} addComment={this.addComment} /> : (
                     <View style={styles.loginMessage}>
                         <Text>Sign in to add a comment</Text>
                     </View>
@@ -50,8 +56,8 @@ class PostCard extends React.Component {
 
                 <FlatList
                     data={this.state.postComments}
-                    renderItem={({ item }) => <Comment comment={item} renderComments={this.renderComments} />}
-                    keyExtractor={(comment) => comment.id.toString()}
+                    renderItem={({ item }) => <Comment comment={item} />}
+                    keyExtractor={(comment) => comment.body}
                 />
                 <Button
                     title="Delete Post"
@@ -85,13 +91,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-    comments: state.commentsObject.comments,
     loggedIn: state.auth.id
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    deletePost: (id) => dispatch(deletePost(id)),
-    deleteComments: (id) => dispatch(deleteComments(id))
+    deletePost: (id) => dispatch(deletePost(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostCard);
